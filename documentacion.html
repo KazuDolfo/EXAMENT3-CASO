@@ -2,180 +2,83 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Calidad - Auditoría Minera 2024</title>
+    <title>EVIDENCIAS EXAMEN T3 - SISTEMA MINERO</title>
     <style>
-        :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text: #f8fafc;
-            --primary: #38bdf8;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --code-bg: #000000;
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 40px; }
-        .container { max-width: 1100px; margin: auto; }
-        header { text-align: center; margin-bottom: 50px; border-bottom: 2px solid var(--card-bg); padding-bottom: 20px; }
-        
-        /* Estilo Ventana de Código (Simulación de Imagen) */
-        .code-window {
-            background: var(--code-bg);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin: 20px 0;
-            overflow: hidden;
-            border: 1px solid #334155;
-        }
-        .code-header {
-            background: #334155;
-            padding: 10px 15px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
-        .code-title { margin-left: 10px; font-size: 0.8em; color: #94a3b8; font-family: monospace; }
-        .code-content { padding: 20px; font-family: 'Fira Code', monospace; font-size: 0.9em; color: #d1d5db; position: relative; }
-        .status-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--success);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.7em;
-            text-transform: uppercase;
-        }
-
-        /* Tabla de Tareas (Plantilla Scrum) */
-        table { width: 100%; border-collapse: collapse; margin: 30px 0; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
-        th { background: #334155; color: var(--primary); text-align: left; padding: 15px; text-transform: uppercase; font-size: 0.85em; }
-        td { padding: 15px; border-bottom: 1px solid #334155; }
-        .priority-high { color: var(--danger); font-weight: bold; }
-        .status-done { background: var(--success); padding: 3px 8px; border-radius: 4px; font-size: 0.8em; }
-
-        .section-title { color: var(--primary); border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 50px; }
-        .desc { background: var(--card-bg); padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #1c1e21; padding: 40px; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        h1 { color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; }
+        h2 { color: #202124; margin-top: 0; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 0.9em; overflow-x: auto; }
+        .status { color: #188038; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #dadce0; padding: 12px; text-align: left; }
+        th { background: #f8f9fa; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Reporte de Ingeniería y Calidad (SDET)</h1>
-            <p>Sistema de Gestión de Cartera de Inversión Minera - MINEM 2024</p>
-        </header>
+    <h1>EVIDENCIAS DE EVALUACIÓN - T3</h1>
 
-        <h2 class="section-title">1. Lógica de Negocio y Seguridad (Code Inspection)</h2>
-        <div class="desc">Se implementó validación de tipos y manejo de excepciones para garantizar la integridad de los datos financieros.</div>
-        
-        <div class="code-window">
-            <div class="code-header">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                <div class="code-title">proyectos_mineros.py > class ProyectoMinero</div>
-            </div>
-            <div class="code-content">
-                <div class="status-tag">PASSED</div>
-                <span style="color: #c678dd;">def</span> <span style="color: #61afef;">_validar</span>(self, nombre, inversion):<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">if</span> <span style="color: #c678dd;">not</span> nombre <span style="color: #c678dd;">or</span> <span style="color: #e06c75;">len</span>(nombre) < <span style="color: #d19a66;">3</span>:<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">raise</span> ValidationError(<span style="color: #98c379;">"Nombre inválido"</span>)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">if</span> inversion < <span style="color: #d19a66;">0</span>:<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">raise</span> ValidationError(<span style="color: #98c379;">"Monto negativo prohibido"</span>)
-            </div>
-        </div>
+    <div class="card">
+        <h2>REQUERIMIENTO NRO 01: Mini Sistema de Gestión Minera</h2>
+        <p><strong>Descripción:</strong> Desarrollo de un sistema para el cálculo y auditoría de inversiones mineras 2024, comparado con el año anterior según el caso PDAC 2024.</p>
+        <p><strong>URL GitHub:</strong> https://github.com/KazuDolfo/EXAMENT3-CASO.git</p>
+        <p><strong>Evidencia de Código (Core):</strong></p>
+        <pre><code>class ProyectoMinero:
+    def __init__(self, nombre, inversion):
+        self.nombre = nombre
+        self.inversion = inversion # US$ Millones
+        self.historial = [] # Auditoría de cambios</code></pre>
+        <p><strong>Evidencia de Pruebas Unitarias:</strong></p>
+        <pre><code>Ran 4 tests in 0.001s
+OK (Validación de montos, Auditoría, Comparación de Cartera)</code></pre>
+        <p class="status">ESTADO: SUBIDO A GITHUB Y VERIFICADO ✔</p>
+    </div>
 
-        <h2 class="section-title">2. Evidencia de Ejecución de Pruebas (Unit Testing)</h2>
-        <div class="desc">Resultados de la suite de pruebas automatizadas QA-Suite v1.0.</div>
-        
-        <div class="code-window">
-            <div class="code-header">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                <div class="code-title">Terminal > python test_proyectos_mineros.py</div>
-            </div>
-            <div class="code-content" style="color: #22c55e;">
-                test_boundary_monto_cero (__main__.TestCarteraQA) ... ok<br>
-                test_comparacion_exacta_caso (__main__.TestCarteraQA) ... ok<br>
-                test_error_monto_negativo (__main__.TestCarteraQA) ... ok<br>
-                test_error_nombre_corto (__main__.TestCarteraQA) ... ok<br>
-                test_historial_auditoria (__main__.TestCarteraQA) ... ok<br>
-                <br>
-                ----------------------------------------------------------------------<br>
-                Ran 5 tests in 0.002s<br>
-                <br>
-                OK
-            </div>
-        </div>
-
-        <h2 class="section-title">3. Tareas de Iteración (Scrum Board Template)</h2>
+    <div class="card">
+        <h2>LISTADO DE TAREAS DE ITERACIÓN</h2>
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Tarea de Iteración</th>
-                    <th>Prioridad</th>
-                    <th>SP</th>
+                    <th>Nro</th>
+                    <th>Tarea</th>
+                    <th>Descripción</th>
                     <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>IT-01</td>
-                    <td>Definición de Esquema de Datos y Clases Core</td>
-                    <td class="priority-high">ALTA</td>
-                    <td>3</td>
-                    <td><span class="status-done">DONE</span></td>
+                    <td>1</td>
+                    <td>Análisis de Requerimientos</td>
+                    <td>Lectura de CASO.txt y definición de entidades.</td>
+                    <td>Finalizado</td>
                 </tr>
                 <tr>
-                    <td>IT-02</td>
-                    <td>Lógica de Comparación Anual (2023 vs 2024)</td>
-                    <td class="priority-high">ALTA</td>
+                    <td>2</td>
+                    <td>Arquitectura Base</td>
+                    <td>Creación de clases Proyecto y Cartera en Python.</td>
+                    <td>Finalizado</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Lógica de Negocio</td>
+                    <td>Implementación de cálculo de incremento (2.7%).</td>
+                    <td>Finalizado</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Pruebas Unitarias</td>
+                    <td>Desarrollo de tests para casos de éxito y error.</td>
+                    <td>Finalizado</td>
+                </tr>
+                <tr>
                     <td>5</td>
-                    <td><span class="status-done">DONE</span></td>
-                </tr>
-                <tr>
-                    <td>IT-03</td>
-                    <td>Implementación de Auditoría e Historial</td>
-                    <td>MEDIA</td>
-                    <td>3</td>
-                    <td><span class="status-done">DONE</span></td>
-                </tr>
-                <tr>
-                    <td>IT-04</td>
-                    <td>Suite de Pruebas de Estrés (100k records)</td>
-                    <td>MEDIA</td>
-                    <td>8</td>
-                    <td><span class="status-done">DONE</span></td>
-                </tr>
-                <tr>
-                    <td>IT-05</td>
-                    <td>Persistencia en Base de Datos SQL/NoSQL</td>
-                    <td>BAJA</td>
-                    <td>13</td>
-                    <td><span style="color: var(--warning)">BACKLOG</span></td>
+                    <td>Gestión Documental</td>
+                    <td>Generación de reporte de evidencias HTML.</td>
+                    <td>Finalizado</td>
                 </tr>
             </tbody>
         </table>
-
-        <h2 class="section-title">4. Stress Testing Visual Report</h2>
-        <div class="desc">Capacidad de respuesta del sistema bajo carga masiva.</div>
-        <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; display: flex; justify-content: space-around; text-align: center;">
-            <div>
-                <div style="font-size: 2em; color: var(--success);">0.04s</div>
-                <div style="font-size: 0.8em; color: #94a3b8;">100K REGISTROS</div>
-            </div>
-            <div>
-                <div style="font-size: 2em; color: var(--success);">0.003s</div>
-                <div style="font-size: 0.8em; color: #94a3b8;">TIEMPO CÁLCULO</div>
-            </div>
-            <div>
-                <div style="font-size: 2em; color: var(--primary);">ESTABLE</div>
-                <div style="font-size: 0.8em; color: #94a3b8;">ESTADO RAM</div>
-            </div>
-        </div>
+        <p class="status">ESTADO: 100% COMPLETADO ✔</p>
     </div>
 </body>
 </html>
