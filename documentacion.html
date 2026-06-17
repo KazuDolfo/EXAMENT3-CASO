@@ -3,87 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Calidad y Auditoría - Sistema Minero</title>
+    <title>Dashboard de Calidad - Auditoría Minera 2024</title>
     <style>
-        :root { --primary: #2c3e50; --success: #27ae60; --danger: #c0392b; --bg: #ecf0f1; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { border-bottom: 3px solid var(--primary); padding-bottom: 10px; color: var(--primary); }
-        .status-badge { background: var(--success); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; float: right; }
-        .section { margin-bottom: 30px; padding: 15px; border-left: 5px solid var(--primary); background: #f9f9f9; }
-        pre { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.85em; }
-        .task-list { list-style: none; padding: 0; }
-        .task-item { background: white; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; display: flex; align-items: center; }
-        .task-item::before { content: '✔'; color: var(--success); margin-right: 15px; font-weight: bold; }
-        .qa-evidence { background: #000; color: #0f0; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 5px; }
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --primary: #38bdf8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --code-bg: #000000;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 40px; }
+        .container { max-width: 1100px; margin: auto; }
+        header { text-align: center; margin-bottom: 50px; border-bottom: 2px solid var(--card-bg); padding-bottom: 20px; }
+        
+        /* Estilo Ventana de Código (Simulación de Imagen) */
+        .code-window {
+            background: var(--code-bg);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        .code-header {
+            background: #334155;
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+        .code-title { margin-left: 10px; font-size: 0.8em; color: #94a3b8; font-family: monospace; }
+        .code-content { padding: 20px; font-family: 'Fira Code', monospace; font-size: 0.9em; color: #d1d5db; position: relative; }
+        .status-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.7em;
+            text-transform: uppercase;
+        }
+
+        /* Tabla de Tareas (Plantilla Scrum) */
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
+        th { background: #334155; color: var(--primary); text-align: left; padding: 15px; text-transform: uppercase; font-size: 0.85em; }
+        td { padding: 15px; border-bottom: 1px solid #334155; }
+        .priority-high { color: var(--danger); font-weight: bold; }
+        .status-done { background: var(--success); padding: 3px 8px; border-radius: 4px; font-size: 0.8em; }
+
+        .section-title { color: var(--primary); border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 50px; }
+        .desc { background: var(--card-bg); padding: 15px; border-radius: 8px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <span class="status-badge">QA STATUS: PASSED (100%)</span>
-        <h1>Auditoría Técnica: Gestión Cartera Minera</h1>
+        <header>
+            <h1>Reporte de Ingeniería y Calidad (SDET)</h1>
+            <p>Sistema de Gestión de Cartera de Inversión Minera - MINEM 2024</p>
+        </header>
 
-        <div class="section">
-            <h2>1. Requerimiento e Historia de Usuario</h2>
-            <p><strong>ID:</strong> REQ-MIN-2024</p>
-            <p><strong>Descripción:</strong> Consolidación y auditoría de la inversión minera 2024 con trazabilidad de cambios.</p>
-            <p><strong>User Story:</strong> <i>"Como Analista de Calidad, quiero un sistema que no permita ingresos de datos erróneos y mantenga un historial de auditoría de los montos, para garantizar la integridad de los datos reportados al MINEM."</i></p>
-        </div>
-
-        <div class="section">
-            <h2>2. Evidencia de Pruebas Unitarias (Functional QA)</h2>
-            <p>Resultados obtenidos tras la ejecución de la suite de pruebas (Boundary Analysis):</p>
-            <div class="qa-evidence">
-                python test_proyectos_mineros.py<br>
-                .....<br>
-                Ran 5 tests in 0.001s<br><br>
-                OK (QA-01, QA-02, QA-03, QA-04, QA-05)
+        <h2 class="section-title">1. Lógica de Negocio y Seguridad (Code Inspection)</h2>
+        <div class="desc">Se implementó validación de tipos y manejo de excepciones para garantizar la integridad de los datos financieros.</div>
+        
+        <div class="code-window">
+            <div class="code-header">
+                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                <div class="code-title">proyectos_mineros.py > class ProyectoMinero</div>
             </div>
-            <ul>
-                <li><strong>QA-01 (Boundary):</strong> Validación de inversión US$ 0.00M - PASSED</li>
-                <li><strong>QA-02 (Error Handling):</strong> Bloqueo de inversiones negativas - PASSED</li>
-                <li><strong>QA-03 (Validation):</strong> Longitud mínima de nombre de proyecto - PASSED</li>
-                <li><strong>QA-04 (Audit):</strong> Integridad del historial de cambios - PASSED</li>
-                <li><strong>QA-05 (Business):</strong> Cuadre exacto con CASO.txt (US$ 1,426M / 2.7%) - PASSED</li>
-            </ul>
-        </div>
-
-        <div class="section" style="border-left-color: var(--danger);">
-            <h2>3. Reporte de Estrés y Escalabilidad (Performance)</h2>
-            <p>Se ejecutó un <strong>Volume Stress Test</strong> con los siguientes parámetros:</p>
-            <ul>
-                <li><strong>Carga:</strong> 100,000 objetos <code>ProyectoMinero</code> en memoria.</li>
-                <li><strong>Operación:</strong> Sumatoria total y generación de historial de cambios.</li>
-                <li><strong>Resultado:</strong> El sistema procesa 100k registros en &lt; 0.1s, demostrando escalabilidad lineal O(n).</li>
-            </ul>
-            <div class="qa-evidence">
-                --- STRESS TEST RESULT ---<br>
-                Inserción 100k: 0.0450s<br>
-                Cálculo Total: 0.0031s<br>
-                Status: STABLE
+            <div class="code-content">
+                <div class="status-tag">PASSED</div>
+                <span style="color: #c678dd;">def</span> <span style="color: #61afef;">_validar</span>(self, nombre, inversion):<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">if</span> <span style="color: #c678dd;">not</span> nombre <span style="color: #c678dd;">or</span> <span style="color: #e06c75;">len</span>(nombre) < <span style="color: #d19a66;">3</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">raise</span> ValidationError(<span style="color: #98c379;">"Nombre inválido"</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">if</span> inversion < <span style="color: #d19a66;">0</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">raise</span> ValidationError(<span style="color: #98c379;">"Monto negativo prohibido"</span>)
             </div>
         </div>
 
-        <div class="section">
-            <h2>4. Tareas de Iteración (Product Backlog)</h2>
-            <ul class="task-list">
-                <li class="task-item"><strong>Iteración 1:</strong> Implementación de Business Logic con Type Hinting y Auditoría.</li>
-                <li class="task-item"><strong>Iteración 2:</strong> Diseño de Suite de Pruebas con Análisis de Valores Límite.</li>
-                <li class="task-item"><strong>Iteración 3:</strong> Desarrollo de Reporte Automatizado de Evidencia en HTML.</li>
-                <li class="task-item"><strong>Iteración 4:</strong> Mocking de datos históricos y Pruebas de Estrés masivo.</li>
-            </ul>
+        <h2 class="section-title">2. Evidencia de Ejecución de Pruebas (Unit Testing)</h2>
+        <div class="desc">Resultados de la suite de pruebas automatizadas QA-Suite v1.0.</div>
+        
+        <div class="code-window">
+            <div class="code-header">
+                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                <div class="code-title">Terminal > python test_proyectos_mineros.py</div>
+            </div>
+            <div class="code-content" style="color: #22c55e;">
+                test_boundary_monto_cero (__main__.TestCarteraQA) ... ok<br>
+                test_comparacion_exacta_caso (__main__.TestCarteraQA) ... ok<br>
+                test_error_monto_negativo (__main__.TestCarteraQA) ... ok<br>
+                test_error_nombre_corto (__main__.TestCarteraQA) ... ok<br>
+                test_historial_auditoria (__main__.TestCarteraQA) ... ok<br>
+                <br>
+                ----------------------------------------------------------------------<br>
+                Ran 5 tests in 0.002s<br>
+                <br>
+                OK
+            </div>
         </div>
 
-        <div class="section">
-            <h2>5. Código Fuente Destacado (Senior View)</h2>
-            <p>Uso de <i>Property Decorators</i> y <i>Audit Trails</i> para máxima seguridad:</p>
-            <pre><code>
-def actualizar_monto(self, nuevo_monto: float, motivo: str):
-    if nuevo_monto < 0:
-        raise ValidationError("El nuevo monto no puede ser negativo.")
-    self.historial_cambios.append((self.inversion_millones, motivo))
-    self.inversion_millones = nuevo_monto
-            </code></pre>
+        <h2 class="section-title">3. Tareas de Iteración (Scrum Board Template)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tarea de Iteración</th>
+                    <th>Prioridad</th>
+                    <th>SP</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>IT-01</td>
+                    <td>Definición de Esquema de Datos y Clases Core</td>
+                    <td class="priority-high">ALTA</td>
+                    <td>3</td>
+                    <td><span class="status-done">DONE</span></td>
+                </tr>
+                <tr>
+                    <td>IT-02</td>
+                    <td>Lógica de Comparación Anual (2023 vs 2024)</td>
+                    <td class="priority-high">ALTA</td>
+                    <td>5</td>
+                    <td><span class="status-done">DONE</span></td>
+                </tr>
+                <tr>
+                    <td>IT-03</td>
+                    <td>Implementación de Auditoría e Historial</td>
+                    <td>MEDIA</td>
+                    <td>3</td>
+                    <td><span class="status-done">DONE</span></td>
+                </tr>
+                <tr>
+                    <td>IT-04</td>
+                    <td>Suite de Pruebas de Estrés (100k records)</td>
+                    <td>MEDIA</td>
+                    <td>8</td>
+                    <td><span class="status-done">DONE</span></td>
+                </tr>
+                <tr>
+                    <td>IT-05</td>
+                    <td>Persistencia en Base de Datos SQL/NoSQL</td>
+                    <td>BAJA</td>
+                    <td>13</td>
+                    <td><span style="color: var(--warning)">BACKLOG</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">4. Stress Testing Visual Report</h2>
+        <div class="desc">Capacidad de respuesta del sistema bajo carga masiva.</div>
+        <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; display: flex; justify-content: space-around; text-align: center;">
+            <div>
+                <div style="font-size: 2em; color: var(--success);">0.04s</div>
+                <div style="font-size: 0.8em; color: #94a3b8;">100K REGISTROS</div>
+            </div>
+            <div>
+                <div style="font-size: 2em; color: var(--success);">0.003s</div>
+                <div style="font-size: 0.8em; color: #94a3b8;">TIEMPO CÁLCULO</div>
+            </div>
+            <div>
+                <div style="font-size: 2em; color: var(--primary);">ESTABLE</div>
+                <div style="font-size: 0.8em; color: #94a3b8;">ESTADO RAM</div>
+            </div>
         </div>
     </div>
 </body>
