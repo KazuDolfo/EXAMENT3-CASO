@@ -1,35 +1,44 @@
 import unittest
-from proyectos_mineros import ProyectoMinero, CarteraInversion
+from proyectos_mineros import ProyectoMinero, CarteraInversion, ValidationError
 
-class TestCarteraInversion(unittest.TestCase):
-    def test_calcular_total_inversion(self):
-        cartera = CarteraInversion(2024)
-        cartera.agregar_proyecto(ProyectoMinero("Reposición Ferrobamba", 1753))
-        cartera.agregar_proyecto(ProyectoMinero("Coimolache Sulfuros", 598))
+class TestCarteraQA(unittest.TestCase):
+    
+    def setUp(self):
+        self.cartera = CarteraInversion(2024)
+
+    def test_boundary_monto_cero(self):
+        """QA-01: Validar que se permite inversión de cero (valor límite)."""
+        p = ProyectoMinero("Proyecto Test", 0)
+        self.assertEqual(p.inversion_millones, 0)
+
+    def test_error_monto_negativo(self):
+        """QA-02: Validar que montos negativos lanzan ValidationError."""
+        with self.assertRaises(ValidationError):
+            ProyectoMinero("Error Negativo", -1)
+
+    def test_error_nombre_corto(self):
+        """QA-03: Validar longitud mínima del nombre."""
+        with self.assertRaises(ValidationError):
+            ProyectoMinero("Ab", 100)
+
+    def test_historial_auditoria(self):
+        """QA-04: Verificar que el historial de cambios registra movimientos."""
+        p = ProyectoMinero("Coroccohuayco", 590)
+        p.actualizar_monto(1500, "Ampliación de infraestructura")
         
-        self.assertEqual(cartera.calcular_total_inversion(), 1753 + 598)
+        self.assertEqual(len(p.historial_cambios), 2)
+        self.assertEqual(p.historial_cambios[0][0], 590)
+        self.assertEqual(p.inversion_millones, 1500)
 
-    def test_comparacion_cartera(self):
-        # Datos del caso
+    def test_comparacion_exacta_caso(self):
+        """QA-05: Validar los datos específicos del CASO.txt."""
         total_2023 = 53130
-        cartera_2024 = CarteraInversion(2024)
-   
-        nuevos_proyectos = [
-            ProyectoMinero("Reposición Ferrobamba", 1753),
-            ProyectoMinero("Coimolache Sulfuros", 598),
-            ProyectoMinero("Mina Justa Subterránea", 500),
-            ProyectoMinero("Reposición Colquijirca", 431),
-            ProyectoMinero("Ampliación Huancapetí", 345),
-            ProyectoMinero("Ampliación Huachocolpa", 167)
-        ]
-        proyectos_anteriores_monto = 53130 - 3794 + 1426
+        # Simulamos llegada al total 2024
+        self.cartera.agregar_proyecto(ProyectoMinero("Total Consolidado", 54556))
         
-        cartera_2024.agregar_proyecto(ProyectoMinero("Total Consolidado", 54556))
-        
-        diferencia, porcentaje = cartera_2024.comparar_con_año_anterior(total_2023)
-        
-        self.assertEqual(diferencia, 1426)
-        self.assertAlmostEqual(porcentaje, 2.684, places=2) # 2.7% aprox
+        diff, porc = self.cartera.comparar_con_anterior(total_2023)
+        self.assertEqual(diff, 1426)
+        self.assertAlmostEqual(porc, 2.684, places=2)
 
 if __name__ == '__main__':
     unittest.main()

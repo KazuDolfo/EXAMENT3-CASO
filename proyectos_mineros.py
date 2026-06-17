@@ -1,84 +1,94 @@
-# Requerimiento: Gestión de Cartera de Inversión Minera
-# Historia de Usuario:
-# Como Analista del MINEM, quiero un sistema que me permita registrar proyectos mineros 
-# con sus montos de inversión para calcular el total de la cartera y compararlo con el 
-# año anterior, de modo que pueda reportar el crecimiento del sector.
+from typing import List, Tuple, Optional
+from datetime import datetime
+
+class MineriaError(Exception):
+    """Clase base para excepciones del sistema."""
+    pass
+
+class ValidationError(MineriaError):
+    """Excepción para errores de validación de datos."""
+    pass
 
 class ProyectoMinero:
-    def __init__(self, nombre, inversion_millones):
+    def __init__(self, nombre: str, inversion_millones: float):
+        self._validar(nombre, inversion_millones)
         self.nombre = nombre
         self.inversion_millones = inversion_millones
+        self.fecha_registro = datetime.now()
+        self.historial_cambios: List[Tuple[float, str]] = [(inversion_millones, "Registro inicial")]
+
+    def _validar(self, nombre: str, inversion: float):
+        if not nombre or len(nombre.strip()) < 3:
+            raise ValidationError("El nombre del proyecto debe tener al menos 3 caracteres.")
+        if inversion < 0:
+            raise ValidationError("La inversión no puede ser negativa.")
+
+    def actualizar_monto(self, nuevo_monto: float, motivo: str):
+        if nuevo_monto < 0:
+            raise ValidationError("El nuevo monto no puede ser negativo.")
+        self.historial_cambios.append((self.inversion_millones, motivo))
+        self.inversion_millones = nuevo_monto
 
 class CarteraInversion:
-    def __init__(self, año, proyectos=None):
+    def __init__(self, año: int):
         self.año = año
-        self.proyectos = proyectos if proyectos else []
+        self.proyectos: List[ProyectoMinero] = []
 
-    def agregar_proyecto(self, proyecto):
+    def agregar_proyecto(self, proyecto: ProyectoMinero):
         self.proyectos.append(proyecto)
 
-    def calcular_total_inversion(self):
+    def calcular_total(self) -> float:
         return sum(p.inversion_millones for p in self.proyectos)
 
-    def comparar_con_año_anterior(self, total_anterior):
-        total_actual = self.calcular_total_inversion()
+    def comparar_con_anterior(self, total_anterior: float) -> Tuple[float, float]:
+        if total_anterior < 0:
+            raise ValidationError("El total anterior no puede ser negativo.")
+        total_actual = self.calcular_total()
         diferencia = total_actual - total_anterior
-        porcentaje = (diferencia / total_anterior) * 100 if total_anterior != 0 else 0
+        porcentaje = (diferencia / total_anterior) * 100 if total_anterior > 0 else 0
         return diferencia, porcentaje
 
-def menu():
+def ejecutar_cli():
     cartera = CarteraInversion(2024)
-    # Cargar datos iniciales del caso
-    datos_iniciales = [
-        ("Reposición Ferrobamba", 1753),
-        ("Coimolache Sulfuros", 598),
-        ("Mina Justa Subterránea", 500),
-        ("Reposición Colquijirca", 431),
-        ("Ampliación Huancapetí", 345),
-        ("Ampliación Huachocolpa", 167)
-    ]
-    for n, i in datos_iniciales:
-        cartera.agregar_proyecto(ProyectoMinero(n, i))
+    print("--- SISTEMA MINERO PRO (QA READY) ---")
+    # Datos semilla
+    try:
+        cartera.agregar_proyecto(ProyectoMinero("Reposición Ferrobamba", 1753))
+        cartera.agregar_proyecto(ProyectoMinero("Mina Justa Subterránea", 500))
+    except ValidationError as e:
+        print(f"Error de inicialización: {e}")
 
     while True:
-        print("\n--- SISTEMA DE GESTIÓN DE CARTERA MINERA ---")
-        print("1. Ver total de inversión actual (2024)")
-        print("2. Agregar nuevo proyecto")
-        print("3. Comparar con cartera 2023 (US$ 53,130M)")
-        print("4. Listar proyectos")
-        print("5. Salir")
+        print("\n1. Ver Cartera | 2. Registrar Proyecto | 3. Actualizar Monto | 4. Salir")
+        opt = input("Seleccione: ")
         
-        opcion = input("Seleccione una opción: ")
-        
-        if opcion == "1":
-            total = cartera.calcular_total_inversion()
-            # Simulamos los 40 proyectos que conservan su monto para llegar al total del caso
-            total_completo = total + 44392 + 590 + 29 # Ajuste para llegar a 54556 aprox
-            print(f"Total de Inversión Estimado: US$ {total_completo} millones")
-        elif opcion == "2":
-            nombre = input("Nombre del proyecto: ")
-            try:
-                monto = float(input("Monto de inversión (millones US$): "))
-                cartera.agregar_proyecto(ProyectoMinero(nombre, monto))
-                print("Proyecto agregado exitosamente.")
-            except ValueError:
-                print("Monto inválido.")
-        elif opcion == "3":
-            total_2023 = 53130
-            # Usamos un total simulado basado en el texto para la comparación exacta
-            total_actual_simulado = 54556 
-            diff = total_actual_simulado - total_2023
-            porc = (diff / total_2023) * 100
-            print(f"Diferencia: +US$ {diff} millones")
-            print(f"Incremento: {porc:.1f}%")
-        elif opcion == "4":
-            print("\nProyectos en cartera:")
+        if opt == "1":
+            print(f"\nCartera {cartera.año}: US$ {cartera.calcular_total():,.2f} M")
             for p in cartera.proyectos:
-                print(f"- {p.nombre}: US$ {p.inversion_millones}M")
-        elif opcion == "5":
+                print(f"- {p.nombre}: US$ {p.inversion_millones} M")
+        elif opt == "2":
+            try:
+                nom = input("Nombre: ")
+                monto = float(input("Inversión (M USD): "))
+                cartera.agregar_proyecto(ProyectoMinero(nom, monto))
+                print("Éxito: Proyecto registrado.")
+            except (ValidationError, ValueError) as e:
+                print(f"Error de Validación: {e}")
+        elif opt == "3":
+            nom = input("Nombre del proyecto a editar: ")
+            p = next((p for p in cartera.proyectos if p.nombre.lower() == nom.lower()), None)
+            if p:
+                try:
+                    nuevo = float(input("Nuevo monto: "))
+                    motivo = input("Motivo del cambio: ")
+                    p.actualizar_monto(nuevo, motivo)
+                    print("Éxito: Monto actualizado y auditado.")
+                except ValidationError as e:
+                    print(f"Error: {e}")
+            else:
+                print("Proyecto no encontrado.")
+        elif opt == "4":
             break
-        else:
-            print("Opción no válida.")
 
 if __name__ == "__main__":
-    menu()
+    ejecutar_cli()

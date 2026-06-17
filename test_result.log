@@ -1,0 +1,11 @@
+﻿python : .....
+En línea: 1 Carácter: 19
++ chcp 65001 >$null;python test_proyectos_mineros.py 2>&1 | Out-File -F ...
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (.....:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+----------------------------------------------------------------------
+Ran 5 tests in 0.000s
+
+OK
