@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentación del Proyecto Minero</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: auto; padding: 20px; background: #f4f4f4; }
+        pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        h1, h2 { color: #333; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        code { font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Documentación: Sistema de Gestión de Cartera Minera</h1>
+    
+    <div class="card">
+        <h2>1. Requerimiento y Historia de Usuario</h2>
+        <p><strong>Requerimiento:</strong> Gestión de Cartera de Inversión Minera 2024.</p>
+        <p><strong>Historia de Usuario:</strong> "Como Analista del MINEM, quiero un sistema que me permita registrar proyectos mineros con sus montos de inversión para calcular el total de la cartera y compararlo con el año anterior, de modo que pueda reportar el crecimiento del sector."</p>
+    </div>
+
+    <div class="card">
+        <h2>2. Código de Implementación (Python)</h2>
+        <pre><code>
+class ProyectoMinero:
+    def __init__(self, nombre, inversion_millones):
+        self.nombre = nombre
+        self.inversion_millones = inversion_millones
+
+class CarteraInversion:
+    # Métodos para agregar, calcular total y comparar...
+        </code></pre>
+    </div>
+
+    <div class="card">
+        <h2>3. Pruebas Unitarias</h2>
+        <p>Se utilizaron pruebas unitarias para validar los cálculos de inversión y las comparaciones porcentuales.</p>
+        <pre><code>
+import unittest
+from proyectos_mineros import ProyectoMinero, CarteraInversion
+
+class TestCarteraInversion(unittest.TestCase):
+    def test_calcular_total_inversion(self):
+        # Valida la suma de montos
+    def test_comparacion_cartera(self):
+        # Valida el incremento de US$ 1,426M (2.7%)
+        </code></pre>
+    </div>
+
+    <div class="card">
+        <h2>4. Listado de Tareas de Iteración (Backlog)</h2>
+        <ul>
+            <li><strong>Tarea 1:</strong> Implementar módulo de registro de nuevos proyectos (CRUD).</li>
+            <li><strong>Tarea 2:</strong> Desarrollar lógica de actualización de montos de inversión para proyectos existentes (como Coroccohuayco).</li>
+            <li><strong>Tarea 3:</strong> Crear reporte comparativo anual (2023 vs 2024) con porcentajes de participación.</li>
+            <li><strong>Tarea 4:</strong> Implementar validación de datos según normativa del MINEM (DGPSM).</li>
+            <li><strong>Tarea 5:</strong> Generar visualización de gráficos de inversión por tipo de proyecto (Reposición vs Ampliación).</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -13,10 +13,7 @@ class TestCarteraInversion(unittest.TestCase):
         # Datos del caso
         total_2023 = 53130
         cartera_2024 = CarteraInversion(2024)
-        
-        # Simulamos que llegamos al total de 54556
-        # No agregamos todos los 51 proyectos por brevedad, pero seteamos el total esperado
-        # O mejor, agregamos los nuevos proyectos mencionados
+   
         nuevos_proyectos = [
             ProyectoMinero("Reposición Ferrobamba", 1753),
             ProyectoMinero("Coimolache Sulfuros", 598),
@@ -25,8 +22,7 @@ class TestCarteraInversion(unittest.TestCase):
             ProyectoMinero("Ampliación Huancapetí", 345),
             ProyectoMinero("Ampliación Huachocolpa", 167)
         ]
-        proyectos_anteriores_monto = 53130 - 3794 + 1426 # Esto es solo para cuadrar con los datos del texto
-        # El texto dice: 2024 (54556) - 2023 (53130) = 1426 (2.7%)
+        proyectos_anteriores_monto = 53130 - 3794 + 1426
         
         cartera_2024.agregar_proyecto(ProyectoMinero("Total Consolidado", 54556))
         
